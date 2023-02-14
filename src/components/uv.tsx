@@ -8,8 +8,6 @@ type Props = {
   setManifest: (manifest: string) => void
 }
 
-console.log(uv)
-
 export const UniversalViewer: React.FC<Props> = (props) => {
 
   const { manifest, setManifest } = props
