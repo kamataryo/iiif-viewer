@@ -14,13 +14,16 @@ export const UniversalViewer: React.FC<Props> = (props) => {
 
   const { manifest, setManifest } = props
   const uvContainerRef = useRef<HTMLDivElement>(null)
+
   const [selectedManifest, setSelectedManifest] = useState<string>('')
+  const [uvInit, setUvInit] = useState(false)
 
   useEffect(() => {
-    if(manifest) {
+    if(manifest && !uvInit) {
       uv.init('uv', { manifest })
+      setUvInit(true)
     }
-  }, [])
+  }, [manifest, uvInit])
 
   const onManifestChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedManifest(e.target.value)
