@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useCallback } from 'react'
+import { UniversalViewer } from './components/uv';
+import './App.css'
+
+const search = new URLSearchParams(window.location.search)
+const defaultManifest = search.get('manifest') || ''
 
 function App() {
+  const [manifest, setManifest] = useState(defaultManifest)
+
+  const setManifestAndRoute = useCallback((manifest: string) => {
+    setManifest(manifest)
+    if(!manifest) {
+      search.delete('manifest')
+    } else {
+      search.set('manifest', manifest)
+    }
+    window.location.search = search.toString()
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UniversalViewer manifest={manifest} setManifest={setManifestAndRoute}></UniversalViewer>
   );
 }
 
