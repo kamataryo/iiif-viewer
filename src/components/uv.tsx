@@ -17,6 +17,16 @@ export const UniversalViewer: React.FC<Props> = (props) => {
   const [uvInit, setUvInit] = useState(false)
 
   useEffect(() => {
+    const __alert = window.alert
+    window.alert = (arg) => {
+      if(arg === 'Unable to load manifest') {
+        __alert(arg)
+        setManifest('')
+      }
+    }
+  }, [setManifest])
+
+  useEffect(() => {
     if(manifest && !uvInit) {
       uv.init('uv', { manifest })
       setUvInit(true)
