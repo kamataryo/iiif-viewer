@@ -46,7 +46,7 @@ export const UniversalViewer: React.FC<Props> = (props) => {
     return <div className="container" id="manifest-input" style={ {paddingTop: 200} }>
       <h3>IIIF Viewer <small style={{ fontSize: '0.6em' }}> with <a href="https://github.com/UniversalViewer/universalviewer">Universal Viewer</a></small></h3>
       <div className="input-group mb-3">
-        <span className="input-group-text" id="manifest-label">IIIF Manifest</span>
+        <span className="input-group-text" id="manifest-label">IIIF Manifest URL</span>
         <input
         type="text"
         className="form-control"
