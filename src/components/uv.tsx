@@ -16,6 +16,8 @@ export const UniversalViewer: React.FC<Props> = (props) => {
   const [selectedManifest, setSelectedManifest] = useState<string>('')
   const [uvInit, setUvInit] = useState(false)
 
+  const [editorManifest, setEditorManifest] = useState<string>('')
+
   useEffect(() => {
     const __alert = window.alert
     window.alert = (arg) => {
@@ -42,10 +44,27 @@ export const UniversalViewer: React.FC<Props> = (props) => {
     }
   }, [setManifest])
 
+  const onEditorManifestChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setEditorManifest(e.target.value)
+  }, [])
+
+  const onLoadEditorManifestClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      JSON.parse(editorManifest)
+    } catch {
+      // invalid JSON
+      // TODO: show validation
+      return
+    }
+    const blobUrl = URL.createObjectURL(new Blob([editorManifest], { type: 'application/json' }))
+    console.log(blobUrl)
+    setManifest(blobUrl)
+  }, [editorManifest, setManifest])
+
   if(!manifest) {
     return <div className="container" id="manifest-input" style={ {paddingTop: 200} }>
       <h3>IIIF Viewer <small style={{ fontSize: '0.6em' }}> with <a href="https://github.com/UniversalViewer/universalviewer">Universal Viewer</a></small></h3>
-      <div className="input-group mb-3">
+      <div className="input-group mb-5">
         <span className="input-group-text" id="manifest-label">IIIF Manifest URL</span>
         <input
         type="text"
@@ -55,7 +74,15 @@ export const UniversalViewer: React.FC<Props> = (props) => {
         value={selectedManifest}
         onChange={onManifestChange}
         onKeyDown={onManifestKeyDown}
-        />
+      />
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="manifest-editor" className="form-label">{'Edit my manifest'}</label>
+        <textarea value={editorManifest} onChange= {onEditorManifestChange} className="form-control" id="manifest-editor" rows={10}></textarea>
+      </div>
+      <div className="mb-3">
+        <button type="button" className="btn btn-primary mb-3" onClick={onLoadEditorManifestClick}>{'Load'}</button>
       </div>
     </div>
   } else {
