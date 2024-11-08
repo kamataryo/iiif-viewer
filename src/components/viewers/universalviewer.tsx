@@ -1,6 +1,5 @@
 import React from 'react'
 import { useRef, useEffect, useState } from 'react'
-import * as uv from 'universalviewer'
 import 'universalviewer/dist/esm/index.css'
 
 type Props = {
