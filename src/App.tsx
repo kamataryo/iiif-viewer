@@ -9,7 +9,7 @@ type IIIFViewer = 'Universalviewer' | 'Mirador' | 'OpenSeadragon'
 const availableViewers: IIIFViewer[] = ['Universalviewer', 'Mirador', 'OpenSeadragon']
 
 const search = new URLSearchParams(window.location.search)
-const defaultManifest = search.get('manifest') || ''
+const defaultManifest = search.get('manifest') || 'https://iiif.io/api/cookbook/recipe/0009-book-1/manifest.json'
 const defaultViewer = (availableViewers.includes((search.get('viewer') as IIIFViewer)) ? search.get('viewer') : 'Universalviewer') as IIIFViewer || 'Universalviewer'
 const defaultMode = (search.get('mode') as ('on' | 'off')) || 'off'
 

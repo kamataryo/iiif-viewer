@@ -11,10 +11,9 @@
     "vite": "^5.4.10"
   },
   "scripts": {
-    "copy": "cp -r node_modules/openseadragon/build/openseadragon/images/* public/openseadragon/images/",
-    "start": "npm run copy && vite",
-    "build": "npm run copy && vite build",
-    "preview": "npm run copy && vite preview"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "browserslist": {
     "production": [
