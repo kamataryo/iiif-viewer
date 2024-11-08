@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRef, useEffect, useState } from 'react'
+import * as uv from 'universalviewer'
 import 'universalviewer/dist/esm/index.css'
 
 type Props = {
@@ -30,10 +31,11 @@ export const UniversalviewerContainer: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if(manifest && !uvInit) {
-      import('universalviewer').then((uv) => {
-        uv.init('uv', { manifest })
-        setUvInit(true)
-      })
+      // import('universalviewer').then((uv) => {
+      // })
+      uv.init('uv', { manifest })
+      setUvInit(true)
+
     }
   }, [manifest, uvInit])
 
