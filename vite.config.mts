@@ -1,8 +1,5 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import fs from 'node:fs'
-
-
 
 export default defineConfig({
   base: '/iiif-viewer/',
@@ -11,6 +8,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
+    sourcemap: 'inline',
   },
   plugins: [react()],
 });
