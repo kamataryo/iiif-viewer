@@ -1,11 +1,12 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
+import { useRef, useEffect, useState } from 'react'
 
 type Props = {
   manifest: string
 }
 export const MiradorContainer: React.FC<Props> = (props) => {
   const [mdInit, setMdInit] = useState(false)
+  const mdContainerRef = useRef<HTMLDivElement>(null)
 
   const { manifest } = props
 
@@ -14,8 +15,9 @@ export const MiradorContainer: React.FC<Props> = (props) => {
       // @ts-ignore
       import('mirador')
         .then((Mirador) => {
+          if(!mdContainerRef.current) throw new Error('mdContainerRef is not ready')
           Mirador.default.viewer({
-            id: 'md',
+            id: mdContainerRef.current.id,
             windows: [{
               imageToolsEnabled: true,
               imageToolsOpen: true,
@@ -29,6 +31,6 @@ export const MiradorContainer: React.FC<Props> = (props) => {
   }, [manifest, mdInit])
 
   return (
-    <div className="md viewer-container" id="md"></div>
+    <div className="md viewer-container" id="md" ref={mdContainerRef}></div>
   )
 }

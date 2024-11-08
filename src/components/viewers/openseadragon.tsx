@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useEffect, useState } from 'react'
 
 type Props = {
@@ -6,7 +6,8 @@ type Props = {
 }
 export const OpenSeadragonContainer: React.FC<Props> = (props) => {
   const [osdInit, setOsdInit] = useState(false)
-  const [tileSources, setTileSources] = useState<any>(null)
+  const osdContainerRef = useRef<HTMLDivElement>(null)
+
 
   const { manifest } = props
 
@@ -23,23 +24,23 @@ export const OpenSeadragonContainer: React.FC<Props> = (props) => {
         import('openseadragon'),
       ])
         .then(([tileSource, OpenSeadragon]) => {
-
-        OpenSeadragon.default({
-            id: "osd",
-            preserveViewport: true,
-            prefixUrl: '/public/openseadragon/images/',
-            visibilityRatio:    1,
-            minZoomLevel:       1,
-            defaultZoomLevel:   1,
-            sequenceMode:       true,
-            tileSources:   [tileSource],
-        });
-        setOsdInit(true)
+          if(!osdContainerRef.current) throw new Error('osdContainerRef is not ready')
+          OpenSeadragon.default({
+              id: osdContainerRef.current.id,
+              preserveViewport: true,
+              prefixUrl: '/public/openseadragon/images/',
+              visibilityRatio:    1,
+              minZoomLevel:       1,
+              defaultZoomLevel:   1,
+              sequenceMode:       true,
+              tileSources:   [tileSource],
+          });
+          setOsdInit(true)
         })
     }
   }, [manifest, osdInit])
 
   return (
-    <div className="osd viewer-container" id="osd"></div>
+    <div className="osd viewer-container" id="osd" ref={osdContainerRef}></div>
   )
 }
