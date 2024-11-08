@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import { Universalviewer } from './components/viewers/universalviewer';
+import { Mirador } from './components/viewers/mirador';
 
 type IIIFViewer = 'Universalviewer' | 'Mirador'
 const availableViewers: IIIFViewer[] = ['Universalviewer', 'Mirador']
@@ -53,6 +54,7 @@ function App() {
       case 'Universalviewer':
         return <Universalviewer manifest={manifest} />
       case 'Mirador':
+        return <Mirador manifest={manifest} />
       default:
         return <div>Not implemented</div>
     }
