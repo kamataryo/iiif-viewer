@@ -1,11 +1,12 @@
 import React, { useState, useCallback } from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.css';
-import { Universalviewer } from './components/viewers/universalviewer';
-import { Mirador } from './components/viewers/mirador';
+import { UniversalviewerContainer } from './components/viewers/universalviewer';
+import { MiradorContainer } from './components/viewers/mirador';
+import { OpenSeadragonContainer } from './components/viewers/openseadragon';
 
-type IIIFViewer = 'Universalviewer' | 'Mirador'
-const availableViewers: IIIFViewer[] = ['Universalviewer', 'Mirador']
+type IIIFViewer = 'Universalviewer' | 'Mirador' | 'OpenSeadragon'
+const availableViewers: IIIFViewer[] = ['Universalviewer', 'Mirador', 'OpenSeadragon']
 
 const search = new URLSearchParams(window.location.search)
 const defaultManifest = search.get('manifest') || ''
@@ -52,9 +53,11 @@ function App() {
   if(mode === 'on') {
     switch (viewer) {
       case 'Universalviewer':
-        return <Universalviewer manifest={manifest} />
+        return <UniversalviewerContainer manifest={manifest} />
       case 'Mirador':
-        return <Mirador manifest={manifest} />
+        return <MiradorContainer manifest={manifest} />
+      case 'OpenSeadragon':
+        return <OpenSeadragonContainer manifest={manifest} />
       default:
         return <div>Not implemented</div>
     }

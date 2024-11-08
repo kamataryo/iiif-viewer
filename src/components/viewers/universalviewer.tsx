@@ -7,7 +7,7 @@ type Props = {
   manifest: string
 }
 
-export const Universalviewer: React.FC<Props> = (props) => {
+export const UniversalviewerContainer: React.FC<Props> = (props) => {
   const uvContainerRef = useRef<HTMLDivElement>(null)
   const [uvInit, setUvInit] = useState(false)
 
@@ -31,12 +31,14 @@ export const Universalviewer: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if(manifest && !uvInit) {
-      uv.init('uv', { manifest })
-      setUvInit(true)
+      import('universalviewer').then((uv) => {
+        uv.init('uv', { manifest })
+        setUvInit(true)
+      })
     }
   }, [manifest, uvInit])
 
   return (
-    <div className="uv" id="uv" ref={uvContainerRef}></div>
+    <div className="uv viewer-container" id="uv" ref={uvContainerRef}></div>
   )
 }
