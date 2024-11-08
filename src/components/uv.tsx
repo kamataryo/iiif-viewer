@@ -13,15 +13,19 @@ export const UniversalViewer: React.FC<Props> = (props) => {
   const { manifest, setManifest } = props
   const uvContainerRef = useRef<HTMLDivElement>(null)
 
-  const [selectedManifest, setSelectedManifest] = useState<string>('')
+  const [selectedManifest, setSelectedManifest] = useState<string>(localStorage.getItem('manifest') || '')
   const [uvInit, setUvInit] = useState(false)
 
   useEffect(() => {
     const __alert = window.alert
+    // Universalviwer のアラートを乗っ取って、特定のメッセージのみ表示する
     window.alert = (arg) => {
       if(arg === 'Unable to load manifest') {
-        __alert(arg)
+        const message = `Unable to load manifest: ${manifest}`
+        __alert(message)
         setManifest('')
+      } else {
+        __alert(arg)
       }
     }
   }, [setManifest])
@@ -35,6 +39,7 @@ export const UniversalViewer: React.FC<Props> = (props) => {
 
   const onManifestChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedManifest(e.target.value)
+    localStorage.setItem('manifest', e.target.value)
   }, [])
   const onManifestKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if(e.key === 'Enter' && !!e.currentTarget.value) {
